@@ -1,1 +1,19 @@
-This directory is a template for the creation of new ZenPacks.  When a user creates a new ZenPack via the Zenoss gui this directory is copied, modified and installed in $ZENHOME/ZenPacks.
+This is a ZenPack for the IBM SAN Volume Controller.  It is currently a work
+in progress and I am working actively to add new features.
+
+
+Working features:
+========================
+* cluster modeling
+* added SVC Info tab
+* mdisk group modeling
+* mdisk group utilization tracking via perf monitors
+
+
+
+In progress features:
+========================
+* vDisk modeling
+* mapping relationships between components
+* mDisk performance
+* vDisk performance
