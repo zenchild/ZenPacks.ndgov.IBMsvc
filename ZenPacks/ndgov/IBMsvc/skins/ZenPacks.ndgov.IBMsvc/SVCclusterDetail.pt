@@ -1,0 +1,85 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method="post" 
+    name="SVCclusterDetail">
+
+<tal:block
+    tal:define="mdiskgrps here/mdiskgrp/objectValuesAll;
+                tableName string:SVCclusterFormList;
+                tabletitle string:SVC mDisk Groups;
+                batch python:here.ZenTableManager.getBatch(tableName,mdiskgrps,sortedHeader='mdiskgrp_name');">
+
+<input type='hidden' name='tableName' tal:attributes="value tableName" />
+    
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+
+<!-- BEGIN TABLE CONTENTS -->
+    <tr tal:condition="mdiskgrps">
+	<!--
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+              tableName, 'id', 'Id')">Id</th>
+	-->
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+              tableName, 'mdiskgrp_name', 'Name')"></th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+              tableName, 'mdisk_count', 'mDisk Count')"></th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+              tableName, 'vdisk_count', 'vDisk Count')"></th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+              tableName, 'free_capacity', 'Free Capacity(MB)')"></th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+              tableName, 'capacity', 'Total Capacity(MB)')"></th>
+    </tr>
+    <tr tal:condition="not:mdiskgrps">
+        <th class="tableheader" align="left" colspan="9">
+            No mDisk groups found. Double check you have the correct collector plugin and you have remodeled.
+        </th>
+    </tr>
+
+    <tal:block tal:repeat="mdg batch">
+    <tr tal:define="odd repeat/mdg/odd;
+            freecap mdg/free_capacity;
+            totalcap mdg/capacity;
+            pctfree python: int((float(freecap) / float(totalcap)) * 100);"
+            
+        tal:attributes="class python:test(odd, 'odd', 'even')">
+
+      <td class="tablevalues">
+        <a class=tablevalues tal:content="mdg/mdiskgrp_name" 
+        tal:attributes="href mdg/getPrimaryUrlPath"></a>
+      </td>
+
+      <td class="tablevalues" tal:content="mdg/mdisk_count">
+      </td>
+      <td class="tablevalues" tal:content="mdg/vdisk_count">
+      </td>
+      <td class="tablevalues"
+          tal:define="freecap python:int(freecap) / 1024**2"
+          tal:content="string:${freecap}    (${pctfree}%)">
+      </td>
+      <td class="tablevalues"
+          tal:define="totalcap python:int(totalcap) / 1024**2"
+          tal:content="totalcap">
+      </td>
+
+     </tr>
+    </tal:block>
+
+    <tr>
+        <td colspan="9" class="tableheader" align='center'>
+            <form metal:use-macro="here/zenTableNavigation/macros/navtool"></form>
+        </td>
+    </tr>
+
+<!-- END TABLE CONTENTS -->
+
+</tal:block>
+</tal:block>
+</tal:block>
+
+</form>
+
+</tal:block>
+</tal:block>

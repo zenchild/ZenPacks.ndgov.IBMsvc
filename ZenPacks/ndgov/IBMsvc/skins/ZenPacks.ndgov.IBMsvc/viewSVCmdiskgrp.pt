@@ -1,0 +1,45 @@
+<tal:block metal:use-macro="here/templates/macros/page2">
+<tal:block metal:fill-slot="contentPane">
+
+<form method=post 
+    tal:define="manager here/isManager" >
+    <input type="hidden" name="zenScreenName" 
+        tal:attributes="value template/id" /> 
+        
+<tal:block metal:define-macro="objectperf" tal:define="
+                tabletitle string:mDisk Group">
+
+</tal:block>
+
+</form>
+<br/>
+
+<tal:block
+    tal:define="tableName string:viewMdiskGrp;
+                tabletitle string:mDisk Group;"> 
+
+<tal:block metal:use-macro="here/zenuimacros/macros/zentable">
+<tal:block metal:fill-slot="zentablecontents">
+    <tr>
+        <th class="tableheader" align="left" colspan="9">
+            This View is not finished yet.
+        </th>
+    </tr>
+</tal:block>
+</tal:block>
+</tal:block>
+
+
+<!-- Performance Table -->
+<tal:block
+    tal:define="tableName string:perfMdisk;
+                tabletitle string:mDisk Group Performance;"> 
+
+    <tal:block tal:condition="here/monitored" >
+         <table metal:use-macro="here/viewPerformanceDetail/macros/objectperf" />
+    </tal:block>
+</tal:block>
+
+</tal:block>
+</tal:block>
+
