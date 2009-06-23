@@ -30,7 +30,7 @@ class SVCvdisk(DeviceComponent, ManagedEntity):
     name = ""
     io_group_id = -1
     status = ""
-    mdisk_grp_id = -1
+    mdiskgrp_id = -1
     capacity = -1
     vdisk_UID = ""
     
@@ -42,7 +42,7 @@ class SVCvdisk(DeviceComponent, ManagedEntity):
         {'id':'name', 'type':'string', 'mode':''},
         {'id':'io_group_id', 'type':'int', 'mode':''},
         {'id':'status', 'type':'string', 'mode':''},
-        {'id':'mdisk_grp_id', 'type':'int', 'mode':''},
+        {'id':'mdiskgrp_id', 'type':'int', 'mode':''},
         {'id':'capacity', 'type':'int', 'mode':''},
         {'id':'vdisk_UID', 'type':'string', 'mode':''},
         )
