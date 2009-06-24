@@ -17,3 +17,10 @@ In progress features:
 * mapping relationships between components
 * mDisk performance
 * vDisk performance
+
+
+
+Testing
+========================
+Run tests by doing the following:
+#> runtests --type unit IBMsvc

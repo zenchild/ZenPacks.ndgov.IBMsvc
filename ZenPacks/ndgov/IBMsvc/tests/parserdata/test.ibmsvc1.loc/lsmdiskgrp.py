@@ -1,4 +1,3 @@
-print "testing lsmdiskgrp for  test.ibmsvc1.loc"
 {'0' : {'free_capacity': 33285996544, 'capacity': 11101282500608},
 '1' : {'free_capacity': 17179869184, 'capacity': 13589276524544},
 '2' : {'free_capacity': 830539300864, 'capacity': 8757438316544},
