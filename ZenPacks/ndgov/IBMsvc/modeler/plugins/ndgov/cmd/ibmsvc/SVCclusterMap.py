@@ -1,4 +1,4 @@
-__doc__ = """lscluster
+__doc__ = """SVCclusterMap
 Collects information related to a SVC cluster
 """
 
@@ -17,7 +17,7 @@ def parseCluster(results):
     return(res)
 
 
-class lscluster(CommandPlugin):
+class SVCclusterMap(CommandPlugin):
     """
     Run ztmp=`svcinfo lscluster -nohdr -delim :` &&
 	svcinfo lscluster -bytes -delim = ${ztmp/:*/}'

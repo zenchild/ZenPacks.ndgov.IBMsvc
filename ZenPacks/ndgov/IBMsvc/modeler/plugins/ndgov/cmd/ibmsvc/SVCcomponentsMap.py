@@ -1,11 +1,11 @@
-__doc__ = """lsmdiskgrp
+__doc__ = """SVCcomponentMap
 Collects information related to a SVC mdisk group.
 """
 
 import re
 from Products.DataCollector.plugins.CollectorPlugin import CommandPlugin
 
-class lsmdiskgrp(CommandPlugin):
+class SVCcomponentMap(CommandPlugin):
     """
     Run "svcinfo lsmdiskgrp -bytes -nohdr -delim :" to model mdisk group info.
     """
