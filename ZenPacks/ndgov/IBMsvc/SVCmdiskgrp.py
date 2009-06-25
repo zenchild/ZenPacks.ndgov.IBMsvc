@@ -19,6 +19,8 @@ from Products.ZenModel.DeviceComponent import DeviceComponent
 from Products.ZenModel.ManagedEntity import ManagedEntity
 from Products.ZenUtils.Utils import prepId
 
+log = logging.getLogger("zen.SVCmdiskgrp")
+
 
 class SVCmdiskgrp(DeviceComponent, ManagedEntity):
     """IBM San Volume Controller(SVC) mDisk Group"""
@@ -87,32 +89,46 @@ class SVCmdiskgrp(DeviceComponent, ManagedEntity):
 
 
 
-    #def viewName(self):
-    #    return self.getPortName()
-    #name = primarySortKey = viewName
+	# ============= Special modeling methods ============= 
 
-    def device(self):
-        return self.cluster()
+	"""
+	These methods get automatically called if their name is
+	a key in the ObjectMap created in the modeler plugin.
+	Thank you to rocket's wonderful AIX-SNMP ZenPack for
+	showing me the way.
+	"""
+
+	#def modelMdisks(self, mdisk_hash):
+		"""
+		This method creates SVCmdisk objects that are mapped
+		to the correct mDiskgrp object.
+		"""
+
+
+	def modelVdisks(self, vdisk_hash):
+        """
+		This method creates SVCvdisk objects that are mapped
+		to the correct mDiskgrp object.
+        """
+		for vdisk_id in vdisk_hash.keys():
+			vdisk = manage_addvDisk(self.vdisk, vdisk_id)
+			for vdisk_attr in vdisk_hash[vdisk_id]
+				log.debug("vDisk Key: %s -> data: %s" %( vdisk_attr, vdisk_hash[vdisk_id][vdisk_attr]))
+                attrib = getattr(vdisk, vdisk_attr)
+                if callable( attrib ):
+                    attrib(vdisk_hash[vdisk_id][vdisk_attr])
+                else:
+                    setattr(vdisk, vdisk_attr, vdisk_hash[vdisk_id][vdisk_attr])
+
+
+	# =========== End Special modeling methods =========== 
+
+
+    def device(self): return self.cluster()
     
-    #def getPortName(self):
-	#if str(self.Slot) == '-1':
-	#    if str(self.Port) == '-1':
-	#	return "Unknown"
-	#return str(self.Slot) + "/" + str(self.Port)
-    
-    #def getLastChange(self):
-	#if self.LastChange == 0:
-	#    return "No Change"
-	#else:
-	#    days, remainder = divmod(self.LastChange,8640000)
-	#    hours, remainder = divmod(remainder,360000)
-	#    minutes, remainder = divmod(remainder,6000)
-	#    seconds, remainder = divmod(remainder,100)
-	#    return str(days) + " days " + str(hours) + ":" + str(minutes) + ":" + str(seconds)
-    	
     #THIS FUNCTION IS REQUIRED LEAVE IT BE IF NO RRD INFO IS PRESENT	    
     def getRRDNames(self):
-	return ['']
+		return ['']
 
     def getRRDTemplates(self):
         """

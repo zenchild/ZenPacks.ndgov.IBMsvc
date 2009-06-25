@@ -19,6 +19,13 @@ from Products.ZenModel.DeviceComponent import DeviceComponent
 from Products.ZenModel.ManagedEntity import ManagedEntity
 from Products.ZenUtils.Utils import prepId
 
+def manage_addvDisk(vDiskRel, id):
+	"""create vDisk instance and return it to the caller (probably SVCmdiskgrp)"""
+	vdisk_id = prepId(id)
+	vdisk = SVCvdisk(vdisk_id)
+	vDiskRel._setObject(vdisk_id, vdisk)
+	return vDiskRel._getOb(vdisk_id)
+
 
 class SVCvdisk(DeviceComponent, ManagedEntity):
     """IBM San Volume Controller(SVC) vDisk"""
