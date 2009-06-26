@@ -17,14 +17,39 @@
 <tal:block
     tal:define="tableName string:viewMdiskGrp;
                 tabletitle string:mDisk Group;"> 
-
+<tal:block
+    tal:define="vdisks here/vdisk/objectValuesAll;
+                tableName string:SVCmdgView;
+                tabletitle string:SVC mDisk Group View;
+                batch python:here.ZenTableManager.getBatch(tableName,vdisks,sortedHeader='name');">
 <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
 <tal:block metal:fill-slot="zentablecontents">
-    <tr>
-        <th class="tableheader" align="left" colspan="9">
-            This View is not finished yet.
-        </th>
+
+    <tr tal:condition="vdisks">
+		<th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+              tableName, 'name', 'Name')"></th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+              tableName, 'io_group_id', 'IO Group')"></th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+              tableName, 'capacity', 'Capacity(MB)')"></th>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+              tableName, 'vdisk_UID', 'vDisk UID')"></th>
+	</tr>
+    <tr tal:condition="not:vdisks">
+		Sorry, no vDisks were found.
+	</tr>
+
+    <tal:block tal:repeat="vdisk batch">
+	<tr tal:define="odd repeat/vdisk/odd;"
+		tal:attributes="class python:test(odd, 'odd', 'even')">
+		<td class="tablevalues" tal:content="vdisk/name"></td>
+		<td class="tablevalues" tal:content="vdisk/io_group_id"></td>
+		<td class="tablevalues" tal:content="vdisk/capacity"></td>
+		<td class="tablevalues" tal:content="vdisk/vdisk_UID"></td>
     </tr>
+	</tal:block>
+
+</tal:block>
 </tal:block>
 </tal:block>
 </tal:block>
