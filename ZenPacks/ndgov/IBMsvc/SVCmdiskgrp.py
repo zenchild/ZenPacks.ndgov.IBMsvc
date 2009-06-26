@@ -109,7 +109,6 @@ class SVCmdiskgrp(DeviceComponent, ManagedEntity):
 
 
 	# ============= Special modeling methods ============= 
-
 	"""
 	These methods get automatically called if their name is
 	a key in the ObjectMap created in the modeler plugin.
