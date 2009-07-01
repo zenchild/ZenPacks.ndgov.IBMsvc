@@ -1,4 +1,3 @@
-# coding=utf-8
 #############################################################################
 # Copyright © 2009 Dan Wanek <dwanek@nd.gov>
 #
@@ -18,33 +17,22 @@
 # You should have received a copy of the GNU General Public License along
 # with ZenPacks.ndgov.IBMsvc.  If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
-import os
+from Products.ZenRRD.ComponentCommandParser import ComponentCommandParser
 
-from Products.ZenRRD.tests.BaseParsersTestCase import BaseParsersTestCase
-from Products.ZenRRD.parsers.uptime import uptime
+class lsvdisk(ComponentCommandParser):
 
-from ZenPacks.ndgov.IBMsvc.parsers.lsmdiskgrp import lsmdiskgrp
-from ZenPacks.ndgov.IBMsvc.parsers.lsvdisk import lsvdisk
+    componentSplit = '\n'
 
+    componentScanner = '^(?P<component>[^:]+)'
 
-class SVCParsersTestCase(BaseParsersTestCase):
-
-    def testSVCmdiskParsers(self):
-        """
-        Test the mDisk Group parser for the IBM SVC.
-        """
-        datadir = "%s/parserdata" % os.path.dirname(__file__)
-        
-        parserMap = {'svcinfo lsmdiskgrp -bytes -nohdr -delim :' : lsmdiskgrp,
-				'svcinfo lsvdisk -bytes -nohdr -delim :' : lsvdisk
-				} 
-
-        self._testParsers(datadir, parserMap)
-
-
-def test_suite():
-    from unittest import TestSuite, makeSuite
-    suite = TestSuite()
-    suite.addTest(makeSuite(SVCParsersTestCase))
-    return suite
+    scanners = [
+        r'([^:]+):([^:]+):([^:]+):'
+        r'([^:]+):([^:]+):([^:]+):'
+        r'([^:]+):(?P<capacity>[^:]+):([^:]*):'
+        r'([^:]*):([^:]*):([^:]*):'
+        r'([^:]*):([^:]*):([^:]*):'
+        r'([^:]*):([^:]*)'
+        ]
+    
+    componentScanValue = 'id'
 

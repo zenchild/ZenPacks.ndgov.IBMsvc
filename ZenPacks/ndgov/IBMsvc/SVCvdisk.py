@@ -47,84 +47,78 @@ def manage_addvDisk(vDiskRel, id):
 
 
 class SVCvdisk(DeviceComponent, ManagedEntity):
-    """IBM San Volume Controller(SVC) vDisk"""
+	"""IBM San Volume Controller(SVC) vDisk"""
+	
+	portal_type = meta_type = 'SVCvdisk'
+	
+	#**************Custom data Variables here from modeling************************
+	name = ""
+	io_group_id = -1
+	status = ""
+	mdiskgrp_id = -1
+	capacity = -1
+	vdisk_UID = ""
+	#**************END CUSTOM VARIABLES *****************************
 
-    portal_type = meta_type = 'SVCvdisk'
-    
-    #**************Custom data Variables here from modeling************************
-    
-    name = ""
-    io_group_id = -1
-    status = ""
-    mdiskgrp_id = -1
-    capacity = -1
-    vdisk_UID = ""
-    
-    #**************END CUSTOM VARIABLES *****************************
-    
-    
-    #*************  Those should match this list below *******************
-    _properties = (
-        {'id':'name', 'type':'string', 'mode':''},
-        {'id':'io_group_id', 'type':'int', 'mode':''},
-        {'id':'status', 'type':'string', 'mode':''},
-        {'id':'mdiskgrp_id', 'type':'int', 'mode':''},
-        {'id':'capacity', 'type':'int', 'mode':''},
-        {'id':'vdisk_UID', 'type':'string', 'mode':''},
-        )
-    #****************
-    
-    _relations = (
-        ("mdiskgrp", ToOne(ToManyCont,
-            'ZenPacks.ndgov.IBMsvc.SVCmdiskgrp', 'vdisk')),
-        )
+	#*************  Those should match this list below *******************
+	_properties = (
+			{'id':'name', 'type':'string', 'mode':''},
+			{'id':'io_group_id', 'type':'int', 'mode':''},
+			{'id':'status', 'type':'string', 'mode':''},
+			{'id':'mdiskgrp_id', 'type':'int', 'mode':''},
+			{'id':'capacity', 'type':'int', 'mode':''},
+			{'id':'vdisk_UID', 'type':'string', 'mode':''},
+			)
+	#****************
 
-    factory_type_information = ( 
-        { 
-            'id'             : 'SVCvdisk',
-            'meta_type'      : 'SVCvdisk',
-            'description'    : """SAN Volume Controller vDisk""",
-            'icon'           : 'SanInterface_icon.gif',
-            'product'        : 'ZenPacks.ndgov.IBMsvc',
-            'factory'        : 'manage_addSVCvdisk',
-            'immediate_view' : 'viewSVCvdisk',
-            'actions'        :
-            ( 
-                { 'id'            : 'status'
-                , 'name'          : 'Status'
-                , 'action'        : 'viewSVCvdisk'
-                , 'permissions'   : (ZEN_VIEW, )
-                },
-                { 'id'            : 'perfConf'
-                , 'name'          : 'Template'
-                , 'action'        : 'objTemplates'
-                , 'permissions'   : (ZEN_CHANGE_SETTINGS, )
-                },                
-                { 'id'            : 'viewHistory'
-                , 'name'          : 'Modifications'
-                , 'action'        : 'viewHistory'
-                , 'permissions'   : (ZEN_VIEW, )
-                },
-            )
-          },
-        ) 
+	_relations = (
+			("mdiskgrp", ToOne(ToManyCont, 'ZenPacks.ndgov.IBMsvc.SVCmdiskgrp', 'vdisk')),
+			)
 
+	factory_type_information = (
+			{
+				'id'             : 'SVCvdisk',
+				'meta_type'      : 'SVCvdisk',
+				'description'    : """SAN Volume Controller vDisk""",
+				'icon'           : 'SanInterface_icon.gif',
+				'product'        : 'ZenPacks.ndgov.IBMsvc',
+				'factory'        : 'manage_addSVCvdisk',
+				'immediate_view' : 'viewSVCvdisk',
+				'actions'        :
+				(
+					{ 'id'            : 'status'
+						, 'name'          : 'Status'
+						, 'action'        : 'viewSVCvdisk'
+						, 'permissions'   : (ZEN_VIEW, )
+					},
+					{ 'id'            : 'perfConf'
+						, 'name'          : 'Template'
+						, 'action'        : 'objTemplates'
+						, 'permissions'   : (ZEN_CHANGE_SETTINGS, )
+					},
+					{ 'id'            : 'viewHistory'
+						, 'name'          : 'Modifications'
+						, 'action'        : 'viewHistory'
+						, 'permissions'   : (ZEN_VIEW, )
+					},
+				)
+			},
+			) 
 
+	#def viewName(self):
+	#    return self.getPortName()
+	#name = primarySortKey = viewName
 
-    #def viewName(self):
-    #    return self.getPortName()
-    #name = primarySortKey = viewName
+	def device(self):
+		return self.cluster()
 
-    def device(self):
-        return self.cluster()
-    
-    #def getPortName(self):
+	#def getPortName(self):
 	#if str(self.Slot) == '-1':
 	#    if str(self.Port) == '-1':
 	#	return "Unknown"
 	#return str(self.Slot) + "/" + str(self.Port)
-    
-    #def getLastChange(self):
+
+	#def getLastChange(self):
 	#if self.LastChange == 0:
 	#    return "No Change"
 	#else:
@@ -133,10 +127,19 @@ class SVCvdisk(DeviceComponent, ManagedEntity):
 	#    minutes, remainder = divmod(remainder,6000)
 	#    seconds, remainder = divmod(remainder,100)
 	#    return str(days) + " days " + str(hours) + ":" + str(minutes) + ":" + str(seconds)
-    	
-    #THIS FUNCTION IS REQUIRED LEAVE IT BE IF NO RRD INFO IS PRESENT	    
-    def getRRDNames(self):
-	return ['']
+
+	#THIS FUNCTION IS REQUIRED LEAVE IT BE IF NO RRD INFO IS PRESENT	    
+	def getRRDNames(self):
+		return ['']
+
+	def getRRDTemplates(self):
+		"""
+		"""
+		default = self.getRRDTemplateByName("SVC_vdisk")
+		if default:
+			return [default]
+		return []
+
 
 
 InitializeClass(SVCvdisk)

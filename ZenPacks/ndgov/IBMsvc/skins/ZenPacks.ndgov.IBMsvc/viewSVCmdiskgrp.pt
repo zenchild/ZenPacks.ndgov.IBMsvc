@@ -42,7 +42,10 @@
     <tal:block tal:repeat="vdisk batch">
 	<tr tal:define="odd repeat/vdisk/odd;"
 		tal:attributes="class python:test(odd, 'odd', 'even')">
-		<td class="tablevalues" tal:content="vdisk/name"></td>
+		<td class="tablevalues">
+			<a tal:content="vdisk/name"
+			tal:attributes="href vdisk/getPrimaryUrlPath"></a>
+		</td>
 		<td class="tablevalues" tal:content="vdisk/io_group_id"></td>
 		<td class="tablevalues" tal:content="vdisk/capacity"></td>
 		<td class="tablevalues" tal:content="vdisk/vdisk_UID"></td>
