@@ -57,7 +57,7 @@ def parseVdiskInfo(vdisk_a):
 		vdata = vdisk.split(':')
 		if vdata[5] == 'many':
 			continue
-		vdata_h = { 'name': vdata[1],
+		vdata_h = { 'vdisk_name': vdata[1],
 			'io_group_id': vdata[2],
 			'status': vdata[4],
 			'mdiskgrp_id': vdata[5],

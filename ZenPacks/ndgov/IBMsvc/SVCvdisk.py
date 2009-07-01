@@ -34,7 +34,7 @@ from Products.ZenUtils.Utils import convToUnits
 from Products.ZenRelations.RelSchema import *
 from Products.ZenModel.ZenossSecurity import ZEN_VIEW, ZEN_CHANGE_SETTINGS
 
-from Products.ZenModel.DeviceComponent import DeviceComponent
+from Products.ZenModel.OSComponent import OSComponent
 from Products.ZenModel.ManagedEntity import ManagedEntity
 from Products.ZenUtils.Utils import prepId
 
@@ -46,13 +46,13 @@ def manage_addvDisk(vDiskRel, id):
 	return vDiskRel._getOb(vdisk_id)
 
 
-class SVCvdisk(DeviceComponent, ManagedEntity):
+class SVCvdisk(OSComponent, ManagedEntity):
 	"""IBM San Volume Controller(SVC) vDisk"""
 	
 	portal_type = meta_type = 'SVCvdisk'
 	
 	#**************Custom data Variables here from modeling************************
-	name = ""
+	vdisk_name = ""
 	io_group_id = -1
 	status = ""
 	mdiskgrp_id = -1
@@ -62,7 +62,7 @@ class SVCvdisk(DeviceComponent, ManagedEntity):
 
 	#*************  Those should match this list below *******************
 	_properties = (
-			{'id':'name', 'type':'string', 'mode':''},
+			{'id':'vdisk_name', 'type':'string', 'mode':''},
 			{'id':'io_group_id', 'type':'int', 'mode':''},
 			{'id':'status', 'type':'string', 'mode':''},
 			{'id':'mdiskgrp_id', 'type':'int', 'mode':''},

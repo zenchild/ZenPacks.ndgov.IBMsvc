@@ -43,7 +43,7 @@
 	<tr tal:define="odd repeat/vdisk/odd;"
 		tal:attributes="class python:test(odd, 'odd', 'even')">
 		<td class="tablevalues">
-			<a tal:content="vdisk/name"
+			<a tal:content="vdisk/vdisk_name"
 			tal:attributes="href vdisk/getPrimaryUrlPath"></a>
 		</td>
 		<td class="tablevalues" tal:content="vdisk/io_group_id"></td>

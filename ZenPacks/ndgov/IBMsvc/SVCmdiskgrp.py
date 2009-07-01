@@ -34,7 +34,7 @@ from Products.ZenUtils.Utils import convToUnits
 from Products.ZenRelations.RelSchema import *
 from Products.ZenModel.ZenossSecurity import ZEN_VIEW, ZEN_CHANGE_SETTINGS
 
-from Products.ZenModel.DeviceComponent import DeviceComponent
+from Products.ZenModel.OSComponent import OSComponent
 from Products.ZenModel.ManagedEntity import ManagedEntity
 from Products.ZenUtils.Utils import prepId
 
@@ -44,7 +44,7 @@ log = logging.getLogger("zen.SVCmdiskgrp")
 from ZenPacks.ndgov.IBMsvc.SVCvdisk import manage_addvDisk
 
 
-class SVCmdiskgrp(DeviceComponent, ManagedEntity):
+class SVCmdiskgrp(OSComponent, ManagedEntity):
 	"""IBM San Volume Controller(SVC) mDisk Group"""
 	portal_type = meta_type = 'SVCmdiskgrp'
     
@@ -85,7 +85,8 @@ class SVCmdiskgrp(DeviceComponent, ManagedEntity):
 				'immediate_view' : 'viewSVCmdiskgrp',
 				'actions'        :
 				(
-					{ 'id'            : 'status' , 'name'          : 'Status'
+					{ 'id'            : 'status'
+						,'name'          : 'Status'
 						, 'action'        : 'viewSVCmdiskgrp'
 						, 'permissions'   : (ZEN_VIEW, )
 					},
