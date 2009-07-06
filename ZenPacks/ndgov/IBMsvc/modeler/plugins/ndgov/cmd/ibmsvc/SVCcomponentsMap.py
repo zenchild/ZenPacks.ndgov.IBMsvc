@@ -61,6 +61,7 @@ def parseVdiskInfo(vdisk_a):
 			'io_group_id': vdata[2],
 			'status': vdata[4],
 			'mdiskgrp_id': vdata[5],
+			'capacity': vdata[7],
 			'vdisk_UID': vdata[13]}
 
 		if not vdisk_h.has_key(vdata[5]):

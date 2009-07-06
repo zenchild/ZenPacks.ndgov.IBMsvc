@@ -40,14 +40,18 @@
 	</tr>
 
     <tal:block tal:repeat="vdisk batch">
-	<tr tal:define="odd repeat/vdisk/odd;"
+	<tr tal:define="odd repeat/vdisk/odd;
+		vdisk_cap vdisk/capacity"
 		tal:attributes="class python:test(odd, 'odd', 'even')">
 		<td class="tablevalues">
 			<a tal:content="vdisk/vdisk_name"
 			tal:attributes="href vdisk/getPrimaryUrlPath"></a>
 		</td>
 		<td class="tablevalues" tal:content="vdisk/io_group_id"></td>
-		<td class="tablevalues" tal:content="vdisk/capacity"></td>
+		<td class="tablevalues"
+          tal:define="vdisk_cap python:int(vdisk_cap) / 1024**2"
+		  tal:content="string:${vdisk_cap}">
+		</td>
 		<td class="tablevalues" tal:content="vdisk/vdisk_UID"></td>
     </tr>
 	</tal:block>
